@@ -1,0 +1,371 @@
+# ============================================================================
+# Saldo — production .gitignore
+# Flutter (Android-first, offline) + Drift/SQLite + Riverpod + GoRouter
+# ----------------------------------------------------------------------------
+# Principles:
+#  1. Never commit local financial data (DBs, backups, CSV exports).
+#  2. Never commit signing keys, keystores, or secrets (.env, key.properties).
+#  3. Track pubspec.lock for an app (reproducible builds); ignore build output.
+#  4. Track Drift generated *.g.dart / *.drift.dart (required to build without
+#     running build_runner) — do NOT ignore them.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Dart / Flutter / Pub
+# ----------------------------------------------------------------------------
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+.pub-cache/
+.pubspec.lock.bak
+.packages
+package_config.json
+version.json
+
+# Build outputs (all platforms)
+/build/
+**/build/
+
+# Test coverage + profiling
+/coverage/
+coverage/
+.lcov/
+*.lcov
+lcov.info
+
+# Dartdoc output
+**/doc/api/
+**/doc/_api/
+
+# Flutter tool state
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/Flutter.podspec
+.flutter_version
+.fvm/
+flutter_*.log
+
+# Build_runner / codegen cache (generated sources themselves ARE tracked)
+.dart_tool/build/
+.dart_tool/dartdoc/
+.dart_tool/flutter_build/
+.dart_tool/pub/
+generated/
+*.g.part
+*.freezed.part
+
+# Symbolication + obfuscation maps (re-generated on every release build)
+app.*.symbols
+app.*.map.json
+
+# ----------------------------------------------------------------------------
+# Android (Gradle + signing + local SDK config)
+# ----------------------------------------------------------------------------
+# Local SDK path — machine-specific, never commit
+local.properties
+android/local.properties
+
+# Gradle caches (Flutter's android/.gitignore already covers gradlew, the
+# wrapper jar, and local.properties; the flutter tool regenerates them)
+.gradle/
+android/.gradle/
+android/captures/
+
+# Build outputs
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/app/build/
+android/app/*.apk
+android/app/*.aab
+android/app/*.apks
+**/*.apk
+**/*.aab
+**/*.apks
+**/*.dex
+**/*.class
+
+# Signing — NEVER commit real keys
+*.keystore
+*.jks
+*.key
+android/key.properties
+android/app/key.properties
+**/release.keystore
+**/upload-key.keystore
+**/debug.keystore.bak
+
+# Firebase / Play config (contains project identifiers; keep out of public repos)
+# Uncomment if this project must stay fully private/offline per PRD §11:
+# android/app/google-services.json
+# android/app/google-services*.json
+
+# Fastlane supply / Play metadata (often contains release notes + screenshots)
+android/fastlane/report.xml
+android/fastlane/Preview.html
+android/fastlane/screenshots/**/*
+android/fastlane/test_output/**/*
+
+# ----------------------------------------------------------------------------
+# iOS / macOS (Xcode + CocoaPods) — kept portable per PRD §12
+# ----------------------------------------------------------------------------
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/App.framework/
+ios/Flutter/FlutterPluginRegistrant/
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner.xcworkspace/xcuserdata/
+ios/*.xcworkspace/xcuserdata/
+**/xcuserdata/
+**/DerivedData/
+**/*.xcuserstate
+**/*.xccheckout
+**/*.moved-aside
+**/*.pbxuser
+**/*.perspectivev3
+**/*.mode1v3
+**/*.mode2v3
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+macos/Pods/
+macos/Flutter/GeneratedPluginRegistrant.*
+macos/Flutter/ephemeral/
+macos/**/DerivedData/
+
+# Provisioning / certs — NEVER commit
+*.mobileprovision
+*.provisionprofile
+*.p12
+*.cer
+*.pem
+ios/Runner/*.mobileprovision
+
+# CocoaPods (Pods/ ignored above; keep Podfile + Podfile.lock tracked)
+# Pods/CrashlyticsReport/
+Pods/
+
+# ----------------------------------------------------------------------------
+# Linux / Windows / Web desktops
+# ----------------------------------------------------------------------------
+linux/flutter/ephemeral/
+linux/flutter/generated_plugin_registrant.*
+linux/build/
+windows/flutter/ephemeral/
+windows/flutter/generated_plugin_registrant.*
+windows/build/
+windows/**/Debug/
+windows/**/Release/
+web/flutter_bootstrap.js.bak
+
+# MSVC / Windows artifacts
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.dll.bak
+
+# ----------------------------------------------------------------------------
+# Secrets, env, and local config — NEVER commit (PRD §11 privacy)
+# ----------------------------------------------------------------------------
+.env
+.env.*
+*.env
+!.env.example
+!.env.sample
+secrets.dart
+**/secrets.dart
+**/google-services.json.bak
+**/GoogleService-Info.plist.bak
+key.properties.bak
+*.secret
+*.token
+
+# Platform secure-storage / debug helpers
+*.keychain
+*.keychain-db
+
+# ----------------------------------------------------------------------------
+# Local financial data — NEVER commit real user data (PRD §11)
+# Backups (*.json), CSV exports, and SQLite DBs may contain sensitive records.
+# ----------------------------------------------------------------------------
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+*.realm
+*.realm.lock
+*.realm.note
+*.hive
+*.hive.lock
+*.box
+
+# Backup / export artifacts produced by the app or tests
+/backups/
+/exports/
+/backups*/
+/exports*/
+*.backup
+*.bak
+saldo_backup*.json
+saldo_export*.csv
+export_*.csv
+
+# Test fixtures that contain realistic PII — keep synthetic fixtures tracked
+# under test/fixtures/, ignore ad-hoc local dumps:
+*.dump.json
+test/*.db
+test/**/*.db
+integration_test/screenshots/
+integration_test/test_output/
+
+# Temporary files the app may leave in repo-adjacent folders
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ----------------------------------------------------------------------------
+# IDEs and editors
+# ----------------------------------------------------------------------------
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries/
+.idea/**/shelf/
+.idea/**/httpRequests/
+out/
+
+# VS Code — ignore user state, allow shared recommendations
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.code-workspace
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim / Emacs / Atom
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+\#*\#
+.\#*
+TAGS
+tags
+.ctags
+.atom/
+.history
+
+# ----------------------------------------------------------------------------
+# OS artifacts
+# ----------------------------------------------------------------------------
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ----------------------------------------------------------------------------
+# Logs, diagnostics, and misc
+# ----------------------------------------------------------------------------
+*.log
+*.log.*
+logs/
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+flutter_*.log
+dart_*.log
+crashlytics-build.properties
+fabric.properties
+diagnostics/
+core
+core.*
+vgcore.*
+*.stackdump
+*.dmp
+*.dump
+
+# Dart / Flutter analyzer + formatter caches
+.analyzer/
+.dcm/
+
+# Pub global / tooling
+.pub-cache/hosted/pub.dev/*
+
+# Compiled assets that should be regenerated
+**/doc/api/
+migrate_working_dir/
+.build/
+.buildlog/
+.svn/
+.swiftpm/
+
+# ----------------------------------------------------------------------------
+# Explicitly KEEP (do not ignore) — documented so future edits don't break this
+# ----------------------------------------------------------------------------
+# !pubspec.lock          (tracked: reproducible app builds)
+# !lib/**/*.g.dart       (tracked: Drift codegen)
+# !lib/**/*.drift.dart   (tracked: Drift codegen)
+# !assets/fonts/         (tracked: bundled Inter font per design spec)
+# !android/gradle/wrapper/gradle-wrapper.properties
+# !ios/Podfile.lock      (tracked: reproducible iOS builds)
+# !.env.example          (tracked: documents required env keys without secrets)
